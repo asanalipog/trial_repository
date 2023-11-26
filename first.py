@@ -4,3 +4,5 @@ name = input()
 age  = int(input())
 print(cout(name , age))
 print("yes")
+def get_tuple(lst: list[float | bool]) -> tuple[int]:
+    return tuple(int(num) for num in lst)
