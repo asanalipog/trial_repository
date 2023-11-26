@@ -1,2 +1,5 @@
 def cout(name:str, age :int) -> str:
-  print(name.capitalize + " " + age.__abs__)
+  return name
+name = input()
+age  = int(input())
+print(cout(name , age))
