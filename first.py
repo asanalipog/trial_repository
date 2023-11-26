@@ -1,3 +1,14 @@
+from dataclasses import dataclass
+
+
+@dataclass
+class User:
+    user_id: int
+    name: str
+    age: int
+    email: str
+
+
 def cout(name:str, age :int) -> str:
   return name
 name = input()
