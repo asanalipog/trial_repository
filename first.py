@@ -17,3 +17,9 @@ print(cout(name , age))
 print("yes")
 def get_tuple(lst: list[float | bool]) -> tuple[int]:
     return tuple(int(num) for num in lst)
+
+def multiply(*args:int):
+  z = 1
+  for num in args:
+    z = z * num
+  return z
