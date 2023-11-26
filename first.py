@@ -5,3 +5,4 @@ for i in range(20):
 c = 10
 b = c > a
 v = a
+print("hello")
