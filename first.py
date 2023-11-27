@@ -1,42 +1,49 @@
-from dataclasses import dataclass
-from typing import Generic, TypeAlias, TypeVar
-
-@dataclass
-class User:
-    user_id: int
-    name: str
-    age: int
-    email: str
+import requests
+import time
 
 
-def cout(name:str, age :int) -> str:
-  return name
-name = input()
-age  = int(input())
-print(cout(name , age))
-print("yes")
-def get_tuple(lst: list[float | bool]) -> tuple[int]:
-    return tuple(int(num) for num in lst)
-"""
-The multiply function takes any number of inputs of int and multiply it together.
-Comparison with multiply(a, b) it can take any number of inputs
-As, I understood we can use any names instead of *args -> such as *name, etc.
-"""
-def multiply(*args:int):
-  z = 1
-  for num in args:
-    z = z * num
-  return z
+API_URL = 'https://api.telegram.org/bot'
+API_CATS_URL = 'https://api.thecatapi.com/v1/images/search'
+API_DOGS_URL = 'https://random.dog/woof.json'
 
-"""
-the **kwargs let us to control the inputs we will give to the function, however it is may be unordered.
-"""
-def print_values(**kwargs):
-    for key, value in kwargs.items():
-        print("The value of {} is {}".format(key, value))
-print_values(my_name="Sammy", your_name="Casey",
-            a = "Hui", b= "chlen")
-@dataclass
-class Hui:
-  name:str
-  length:int
+BOT_TOKEN = '6600080191:AAFUBCn1GvknB7pcTQ6uViBFTU3mBxWsvzU'
+ERROR_TEXT = 'Здесь должна была быть картинка с котиком :('
+
+offset = -2
+counter = 0
+cat_response: requests.Response
+cat_link: str
+
+
+while counter < 100:
+    print('attempt =', counter)
+    updates = requests.get(f'{API_URL}{BOT_TOKEN}/getUpdates?offset={offset + 1}').json()
+
+    if updates['result']:
+        for result in updates['result']:
+            offset = result['update_id']
+            chat_id = result['message']['from']['id']
+            chat_mes = result['message']['text']
+            cat_response = requests.get(API_CATS_URL)
+            dog_response = requests.get(API_DOGS_URL)
+            if dog_response.status_code == 200:
+                dog_link = dog_response.json()['url']
+                requests.get(f'{API_URL}{BOT_TOKEN}/sendPhoto?chat_id={chat_id}&photo={dog_link}')
+                requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text=okay?')
+            else:
+                requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text=wtf?')
+
+            """
+            if cat_response.status_code == 200:
+                cat_link = cat_response.json()[0]['url']
+                if chat_mes == '1':
+                    requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text=Гандон, ты как цифру угадал?')
+                else:
+                    requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text=Не угадал, держи фотки котов теперь:')
+                    requests.get(f'{API_URL}{BOT_TOKEN}/sendPhoto?chat_id={chat_id}&photo={cat_link}')
+            else:
+                requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text=Бля хз че не так поидее')
+                """
+
+    time.sleep(1)
+    counter += 1
