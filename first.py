@@ -14,7 +14,7 @@ counter = 0
 cat_response: requests.Response
 cat_link: str
 
-offset = -2
+timeout = 10
 updates: dict
 
 
@@ -24,14 +24,12 @@ def do_something() -> None:
 
 while True: 
     start_time = time.time()
-    updates = requests.get(f'{API_URL}{BOT_TOKEN}/getUpdates?offset={offset + 1}').json()
+    updates = requests.get(f'{API_URL}{BOT_TOKEN}/getUpdates?offset={offset + 1}&timeout={timeout}').json()
 
     if updates['result']:
         for result in updates['result']:
             offset = result['update_id']
             do_something()
-
-    time.sleep(3)
     end_time = time.time()
     print(f'Время между запросами к Telegram Bot API: {end_time - start_time}')
 
