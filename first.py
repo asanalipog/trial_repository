@@ -2,10 +2,7 @@ from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command
 from aiogram.types import Message
 
-print("hello")
 
-
-a = 10
 # Вместо BOT TOKEN HERE нужно вставить токен вашего бота,
 # полученный у @BotFather
 BOT_TOKEN = '6600080191:AAFUBCn1GvknB7pcTQ6uViBFTU3mBxWsvzU'
@@ -40,11 +37,14 @@ async def send_stic(message):
 async def rep_audio(message:Message):
     await message.reply_audio(message.audio.file_id)
     await message.answer("It's fine audio")
+async def send_voice(message:Message):
+    await message.reply_voice(message.voice.file_id)
 async def send_echo(message: Message):
     await message.reply(text=message.text)
 
 
 # Регистрируем хэндлеры
+dp.message.register(send_voice, F.voice)
 dp.message.register(send_stic, F.sticker)
 dp.message.register(rep_audio, F.audio)
 dp.message.register(process_start_command, Command(commands='start'))
