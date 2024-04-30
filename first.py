@@ -5,7 +5,7 @@ from aiogram.types import Message
 
 # Вместо BOT TOKEN HERE нужно вставить токен вашего бота,
 # полученный у @BotFather
-BOT_TOKEN = '6600080191:AAFUBCn1GvknB7pcTQ6uViBFTU3mBxWsvzU'
+BOT_TOKEN = 'not for you'
 
 # Создаем объекты бота и диспетчера
 bot = Bot(token=BOT_TOKEN)
@@ -89,7 +89,7 @@ API_URL = 'https://api.telegram.org/bot'
 API_CATS_URL = 'https://api.thecatapi.com/v1/images/search'
 API_DOGS_URL = 'https://random.dog/woof.json'
 
-BOT_TOKEN = '6600080191:AAFUBCn1GvknB7pcTQ6uViBFTU3mBxWsvzU'
+BOT_TOKEN = ''
 ERROR_TEXT = 'Здесь должна была быть картинка с котиком :('
 
 offset = -2
